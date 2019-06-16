@@ -5,7 +5,7 @@ import csv
 from datetime import datetime
 import os
 import subprocess
-import time # TODO
+import time  # TODO
 
 import toml
 
@@ -40,6 +40,7 @@ def simple_quota_schedule(key, history):
 def get_day(when):
     return when.strftime("%Y-%m-%d")
 
+
 def get_log_path(when):
     return os.path.join(OUTPUT_DIRECTORY, f"{get_day(when)}.{LOG_EXTENSION}")
 
@@ -54,7 +55,7 @@ def log_press(config, press):
         writer = csv.DictWriter(
             log_file,
             delimiter=LOG_DELIMITER,
-            fieldnames=["timestamp", "key", "song_played"],
+            fieldnames=["timestamp", "key", "song-played"],
         )
         if not existed_already:
             writer.writeheader()
@@ -79,7 +80,7 @@ def parse_log_row(config, row):
 
     when = datetime.fromtimestamp(float(row["timestamp"]))
     key = unlabel(row["key"], config["key-labels"])
-    song_played = unlabel(row["song_played"], config["song-labels"])
+    song_played = unlabel(row["song-played"], config["song-labels"])
     return Press(when, key, song_played)
 
 
@@ -96,13 +97,15 @@ def read_config():
     with open(CONFIG_PATH, "r") as config_file:
         return toml.load(config_file)
 
+
 def play_song(config, song):
-   subprocess.call(["aplay", config["song-paths"][song]])
+    subprocess.call(["aplay", config["song-paths"][song]])
+
 
 def main():
     config = read_config()
     history = parse_log(config, datetime.now())
-    print(f"Read {len(history)} presses from history")
+    print(f"Read {len(history)} presses from history.")
 
     def handle_key_press(key_pressed):
         now = datetime.now()
@@ -114,7 +117,7 @@ def main():
         if song != SIDE_NEITHER:
             play_song(config, song)
         press = Press(now, key=key_pressed, song_played=song)
-        print(f"Processing {press}")
+        print(f"Logging {press}...")
         history.append(press)
         log_press(config, press)
 
