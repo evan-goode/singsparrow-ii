@@ -1,0 +1,16 @@
+[Unit]
+Description=SingSparrow II operant conditioning software
+Requires=sound.target
+
+[Service]
+User=root
+Type=simple
+ExecStart=/usr/bin/singsparrow-ii
+ProtectSystem=true
+ProtectHome=true
+Restart=always
+RestartSec=1
+StartLimitInterval=0
+
+[Install]
+WantedBy=multi-user.target
