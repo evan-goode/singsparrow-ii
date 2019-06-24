@@ -1,13 +1,12 @@
-key-labels.a = "Key A"
-key-pins.a = 1
-
-key-labels.b = "Key B"
-key-pins.b = 2
-
-song-labels.a = "Song A"
-song-paths.a = "/path/to/song-a.wav"
-
-song-labels.b = "Song B"
-song-paths.b = "/path/to/song-b.wav"
-
-song-labels.neither = "Neither song"
+[[sensor]]
+	label = "Key A"
+	pin = 1
+[[sensor]]
+	label = "Key B"
+	pin = 2
+[[song]]
+	label = "Song A"
+	path = "/path/to/song-a.wav"
+[[song]]
+	label = "Song B"
+	path = "/path/to/song-b.wav"
