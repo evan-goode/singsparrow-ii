@@ -5,7 +5,7 @@ Requires=sound.target
 [Service]
 User=root
 Type=simple
-ExecStart=/usr/bin/singsparrow-ii
+ExecStart=/usr/local/bin/singsparrow-ii
 ProtectSystem=true
 ProtectHome=true
 Restart=always

@@ -11,7 +11,7 @@ setup(
     author="Evan Goode",
     author_email="mail@evangoo.de",
     license="GPLv3",
-    install_requires=["toml"],
+    install_requires=["gpiozero", "toml"],
     packages=find_packages(),
     entry_points={"console_scripts": ["singsparrow-ii=singsparrow.singsparrow:main"]},
 )

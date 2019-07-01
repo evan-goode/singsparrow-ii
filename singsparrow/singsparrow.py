@@ -5,9 +5,12 @@
 from collections import namedtuple
 import csv
 from datetime import datetime
+from functools import partial
+from gpiozero import Button
 import os
 from pathlib import Path
 import random
+from signal import pause
 import subprocess
 import time  # TODO
 
@@ -176,9 +179,16 @@ def play_song(config, song):
     subprocess.check_call(["aplay", config["song"][song]["path"]])
 
 
+schedule_map = {
+    "simple": simple_quota_schedule,
+    "self-balancing": self_balancing_schedule,
+}
+
+
 def main():
     """Entry point"""
     config = read_config()
+    schedule = schedule_map[config["schedule"]]
     verify_writable(get_log_path(when=datetime.now()))
     history = parse_log(config, datetime.now())
     print(f"Read {len(history)} events from history.")
@@ -189,7 +199,7 @@ def main():
             print("It's a new day, clearing history...")
             history.clear()
 
-        song = simple_quota_schedule(config, sensor, now, history)
+        song = schedule(config, sensor, now, history)
         if song is not None:
             play_song(config, song)
         event = Event(now, sensor, song)
@@ -197,11 +207,10 @@ def main():
         history.append(event)
         log_event(config, event)
 
-    # simulations TODO
-    time.sleep(1)
-    for _ in range(30):
-        handle_sensor(0)
-        handle_sensor(1)
+    for index, sensor in enumerate(config["sensor"]):
+        button = Button(sensor["pin"])
+        button.when_pressed = partial(handle_sensor, index)
+    pause()
 
 
 if __name__ == "__main__":
