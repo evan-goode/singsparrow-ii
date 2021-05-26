@@ -39,7 +39,7 @@ def simple_quota_schedule(_config, key, _when, history):
     return key if spent < quota else None
 
 
-def self_balancing_schedule(_config, key, history):
+def self_balancing_schedule(_config, key, _when, history):
     """Attempt to balance the number of plays of each song while maintaining
     the associations between key and song"""
     quota = 50
