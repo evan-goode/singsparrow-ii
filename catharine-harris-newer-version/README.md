@@ -1,1 +1,1 @@
-This directory contains an updated version of the software written by Catharine Harris <cchshnj@comcast.net>. It includes an interactive controller program `controller.py` and is overall a bit more ready for use in production.
+This directory contains an updated version of the software written by Catharine Harris <<cchshnj@comcast.net>>. It includes an interactive controller program `controller.py` and is overall a bit more ready for use in production.
